@@ -787,6 +787,15 @@ MAKE_ALL_GRIDS()
       .def("forward", +[](GridMaker& self, float3 grid_center, const Grid<float, 2, true>& coords,
               const Grid<float, 2, true>& type_vector, const Grid<float, 1, true>& radii,
               Grid<float, 4, true> g){ self.forward(grid_center, coords, type_vector, radii, g); }, "@Docstring_GridMaker_forward_9@")
+
+      // Additional python bindings for centering
+      .def("forward", +[](GridMaker& self, const Example& ex, Grid<float, 4, false> g, float random_translate, bool random_rotate, float3 center){
+                      self.forward(ex, g, random_translate, random_rotate, center); },
+                      (arg("example"),arg("grid"),arg("random_translation")=0.0,arg("random_rotation")=false, arg("center")))
+      .def("forward", +[](GridMaker& self, const Example& ex, Grid<float, 4, true> g, float random_translate, bool random_rotate, float3 center){
+                      self.forward(ex, g, random_translate, random_rotate, center); },
+                      (arg("example"),arg("grid"),arg("random_translation")=0.0,arg("random_rotation")=false,arg("center")))
+
       .def("backward", +[](GridMaker& self, float3 grid_center, const CoordinateSet& in, const Grid<float, 4, false>& diff,
           Grid<float, 2, false> atomic_gradients, Grid<float, 2, false> type_gradients){
           self.backward(grid_center, in, diff, atomic_gradients, type_gradients);}, "@Docstring_GridMaker_backward_1@")
