@@ -1,5 +1,5 @@
 # dlab-public
-Code to run the pipeline described in the paper "DLAB - Deep learning methods for structure-based virtual screening of antibodies" ([bioRxiv](https://www.biorxiv.org/content/10.1101/2021.02.12.430941v1))[1]
+Code to run the antibody virtual screening pipeline described in the paper "DLAB - Deep learning methods for structure-based virtual screening of antibodies" ([bioRxiv](https://www.biorxiv.org/content/10.1101/2021.02.12.430941v1))[1]
 
 ## Install
 1. Install libmolgrid [2] by building from source according to the instructions on the authors github [repository](https://github.com/gnina/libmolgrid). Use the source code provided in this repository, as a small change was made to accomodate the centering method employed for DLAB.
