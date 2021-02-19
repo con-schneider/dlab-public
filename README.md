@@ -21,7 +21,7 @@ The folder tests contains a number of tests you can use to test if your folder s
 ## Running DLAB
 For this script, you will need to be on a machine with GPU and CUDA, which is why this is seperate from the data preperation script (docking and preperation can be run on cpu compute servers before running GPU computations). Run DLAB (both rescoring and virtual screening in one go) using this command:
 		
-		python dlab_re_vs_pipeline.py -c dlab_config.yaml
+	python dlab_re_vs_pipeline.py -c dlab_config.yaml
 
 Where the yaml file defines the locations and types of models used as well as the input data and output file. An example can be found in example_input_files/dlab_config.yaml.
 
