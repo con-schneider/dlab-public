@@ -7,7 +7,9 @@ Code to run the antibody virtual screening pipeline described in the paper "DLAB
 3. Install the python requirements.
 
 ## Test your install
-The folder tests contains a number of tests you can use to test if your folder structure and python environment are set up correctly. The can be run either using pytest or by running each file individually.
+The folder tests/ contains a number of tests you can use to check if your folder structure and python environment are set up correctly. Run them with pytest:
+
+	pytest tests/
 
 ## Data preparation
 1. Prepare your input antibody and antigen structures by running the mark_sur script as per the ZDock README. If you want to limit docking to the (predicted) interaction site, block atoms outside the interaction site by changing column 55-56 after running mark_sur to 19 as per the ZDock README. There is more detail on this in the paper.
