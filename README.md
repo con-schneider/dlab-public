@@ -29,4 +29,5 @@ Where the yaml file defines the locations and types of models used as well as th
 
 ## References
 [1] DLAB - Deep learning methods for structure-based virtual screening of antibodies. C Schneider, A Buchanan, B Taddese, CM Deane, bioRxiv, 2021
+
 [2] libmolgrid: Graphics Processing Unit Accelerated Molecular Gridding for Deep Learning Applications. J Sunseri, DR Koes. Journal of Chemical Information and Modeling, 2020
