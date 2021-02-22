@@ -1,0 +1,3 @@
+bp1,bp2
+/path/to/test_antibody_1.pdb,/path/to/test_antigen.pdb
+/path/to/test_antibody_2.pdb,/path/to/test_antigen.pdb

@@ -1,0 +1,29 @@
+# this points at the run folder created by the data prep pipeline
+input_directory: /path/to/data_output_dir/run_name/  
+
+# the file created by the pipeline containing the scores
+output_file: /path/to/dlab_out.csv
+
+# model specification for DLAB-Re, the models trained in the paper used radius=24, resolution=0.5, batch_size=32
+dlab-re-models:
+  - model_type: CNN3D  # model architecture
+    model_directory: /path/to/pretrained_models/dlab_re/  # directory containing the pre-trained models forming the scoring ensemble
+    model_params:  # kwargs passed to the __init__ during model creation
+      radius: 24  # radius of the grid in Angstrom
+      resolution: 0.5  # resolution of the grid in Angstrom
+      batch_size: 32  
+
+# model specification for DLAB-VS, the models trained in the paper used radius=24, resolution=0.5, batch_size=32
+dlab-vs-models:
+  - model_type: CNN3D
+    model_directory: /path/to/pretrained_models/dlab_vs/cnn3e/
+    model_params:   
+      radius: 24
+      resolution: 0.5
+      batch_size: 10
+  - model_type: DenseNet
+    model_directory: /path/to/pretrained_models/dlab_vs/densenet/
+    model_params:   
+      radius: 24
+      resolution: 0.5
+      batch_size: 10

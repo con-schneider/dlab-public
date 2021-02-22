@@ -1,0 +1,23 @@
+# file formatted as the example file in this folder, detailing the antibody-antigen pairings to dock
+pairings_file: /path/to/pairings_file.csv
+
+# directory in which to create the run folder
+output_directory: /path/to/output/
+
+# name of the run directory --> folder structure will be output_directory/run_name/
+run_name: test_run
+
+# if True, docks that exceed the timeout will be repeated without timeout
+repeat_timeout_docks: True
+
+# if != -1, terminate docking after n seconds, if -1 do not terminate 
+docking_timeout: -1
+
+# number of poses to process from docking run. In the paper, 500 were used
+num_poses: 500
+
+# number of cpu cores to use for parallel computing
+n_jobs: 1
+
+# If True, check if the docking file exists and do not run ZDock if yes
+ignore_repeats: False
