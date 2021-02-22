@@ -5,21 +5,21 @@ Code to run the antibody virtual screening pipeline described in the paper "DLAB
 1. Install libmolgrid [2] by building from source according to the instructions on the authors github [repository](https://github.com/gnina/libmolgrid). Use the source code provided in this repository, as a small change was made to accomodate the centering method employed for DLAB. 
 2. Get [ZDock](http://zdock.umassmed.edu/software/) and copy the source code files into the folder external/zdock-3.0.2-src.
 3. Install the python requirements.
-4. Install openbabel, including the python bindings.
+4. Install [openbabel](https://github.com/openbabel/openbabel), including the python bindings.
 
 ## Test your install
-The folder tests/ contains a number of tests you can use to check if your folder structure and python environment are set up correctly. Run them with pytest:
+The folder tests/ contains scripts you can use to check if your folder structure and python environment are set up correctly. Run them with pytest:
 
 	pytest tests/
 
 ## Data preparation
 1. Prepare your input antibody and antigen structures by running the mark_sur script as per the ZDock README. If you want to limit docking to the (predicted) interaction site, block atoms outside the interaction site by changing column 55-56 after running mark_sur to 19 as per the ZDock README. There is more detail on this in the paper.
 2.  Generate a .csv file containing all antibody and antigen pairings you want to investigate. An example is shown in example_input_files/pairings.csv.
-3.  Use the data\_prep\_pipeline.py script to run ZDock and generate types files. This uses python implementation of the atomtyper functionality in libmolgrid [2]:
+3.  Use the data\_prep\_pipeline.py script to run ZDock and generate types files. This uses a python implementation of the atomtyper functionality in libmolgrid [2]:
 
 		python data_prep_pipeline.py -c data_prep_config.yaml
 		
-    Where data\_prep\_config.yaml configures the pipeline (see example_input_files/data_prep_config.yaml).
+    data\_prep\_config.yaml configures the pipeline (see example_input_files/data_prep_config.yaml).
 
 ## Running DLAB
 For this script, you will need to be on a machine with GPU and CUDA, which is why this is seperate from the data preperation script (docking and preperation can be run on cpu compute servers before running GPU computations). Run DLAB (both rescoring and virtual screening in one go) using this command:
@@ -35,7 +35,7 @@ The pipeline generates a csv file with the columns
 - dlab-vs
 - zdock_score
 
-To follow the approach used in the paper ("DLAB-VS+ZDock"), a final score can be calculated by minmax scaling both DLAB-VS and ZDock score for each target antigen. For the approach denoted "DLAB-Re-max thresholding" in the paper, discard all antibody-antigen pairings not falling in the top 20% of DLAB-Re-max scores. 
+To follow the approach used in the paper ("DLAB-VS+ZDock"), a final score can be calculated by minmax scaling both DLAB-VS and ZDock score for each target antigen and averaging the two scores. For the approach denoted "DLAB-Re-max thresholding" in the paper, discard all antibody-antigen pairings not falling in the top 20% of DLAB-Re-max scores. 
 
 ## References
 [1] DLAB - Deep learning methods for structure-based virtual screening of antibodies. C Schneider, A Buchanan, B Taddese, CM Deane, bioRxiv, 2021
