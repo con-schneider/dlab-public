@@ -29,6 +29,13 @@ For this script, you will need to be on a machine with GPU and CUDA, which is wh
 Where the yaml file defines the locations and types of models used as well as the input data and output file. An example can be found in example_input_files/dlab_config.yaml.
 
 ## Analysing the output
+The pipeline generates a csv file with the columns
+- name
+- dlab-re-max
+- dlab-vs
+- zdock_score
+
+To follow the approach used in the paper ("DLAB-VS+ZDock"), a final score can be calculated by minmax scaling both DLAB-VS and ZDock score for each target antigen. For the approach denoted "DLAB-Re-max thresholding" in the paper, discard all antibody-antigen pairings not falling in the top 20% of DLAB-Re-max scores. 
 
 ## References
 [1] DLAB - Deep learning methods for structure-based virtual screening of antibodies. C Schneider, A Buchanan, B Taddese, CM Deane, bioRxiv, 2021
