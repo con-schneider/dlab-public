@@ -143,7 +143,7 @@ def run_docking(pair: tuple, config: dict, output_dir: Path, timeout: int = -1):
 
     pair, pair_chains = check_adjust_pair_chains(pair, output_dir)
 
-    output_name = f"{bp1.name.split('.')[0][:7]}_{bp2.name.split('.')[0][:7]}.out"
+    output_name = f"{bp1.name.split('.')[0]}_{bp2.name.split('.')[0]}.out"
     output_name = output_dir / "docking_output" / output_name
     # if docking has already been done, we can skip this
     if not config["ignore_repeats"]:
@@ -254,12 +254,13 @@ def teardown(docking_output: dict, output_dir: Path):
 
 
 def generate_types_files(docking_output: dict, config: dict, output_dir: Path):
-    """Generates pdbs from docking output file, converts to types files and deletes the pdbs.
+    """Generates pdbs from docking output file, converts to more storage efficient gninatypes files
+        and deletes the pdbs.
 
     Args:
         docking_output (dict): Output from run_docking().
         config (dict): Parsed yaml config.
-        output_dir (Path): Directory in which to generate the types files.
+        output_dir (Path): Directory in which to generate the gninatypes files.
     """
 
     docking_output_filepath = docking_output["output_name"]
@@ -306,10 +307,10 @@ def generate_types_files(docking_output: dict, config: dict, output_dir: Path):
                 add = "ag"
             name_root = docking_output_filepath.name.split(".")[0]
 
-            outdir_types = output_dir / "types" / name_root
+            outdir_types = output_dir / "gninatypes" / name_root
             outdir_types.mkdir(exist_ok=True)
             outpath = outdir_types / Path(split_pdb_file).name.replace(
-                f".pdb.{bp}", f"_{add}.types"
+                f".pdb.{bp}", f"_{add}.gninatypes"
             )
 
             # supress warnings from openbabel due to pdbs formatted for docking
@@ -371,17 +372,17 @@ def run(config: dict, output_dir: Path):
             for pair in timeouts_pairs:
                 outf.write(f"{pair[0]},{pair[1]}")
 
-    # generate pdbs, parse to types format
+    # generate pdbs, parse to gninatypes format
     with Parallel(n_jobs=config["n_jobs"], verbose=1) as parallel:
         parallel(
             delayed(generate_types_files)(docking_output, config, output_dir)
             for docking_output in finished_docks_output
         )
 
-    # tar the types output, then delete
+    # tar the gninatypes output, then delete
     os.chdir(output_dir)
-    to_tar = "./types"
-    tarred_name = f"./{config['run_name']}_types.tar.gz"
+    to_tar = "./gninatypes"
+    tarred_name = f"./{config['run_name']}_gninatypes.tar.gz"
 
     proc = subprocess.Popen(["tar", "-czf", tarred_name, to_tar])
     proc.communicate()
@@ -409,7 +410,7 @@ def setup_run(config: defaultdict, args: argparse.Namespace):
     pdb_path = output_dir / "pdbs"
     pdb_path.mkdir(exist_ok=True, parents=True)
 
-    types_path = output_dir / "types"
+    types_path = output_dir / "gninatypes"
     types_path.mkdir(exist_ok=True, parents=True)
 
     alt_path = output_dir / "alt_pdbs_for_docking"

@@ -55,6 +55,7 @@ def file_len(fname: Path):
     Returns:
         int: Number of lines in the file.
     """
+    i = 0
     with open(fname) as f:
         for i, l in enumerate(f):
             pass
@@ -199,6 +200,7 @@ def setup_gmaker_eprov(resolution: float, radius: float, data_file: Path):
         data_root="", balanced=False, shuffle=False
     )
     e_provider_test.populate(str(data_file))
+
     return gmaker, e_provider_test
 
 
@@ -206,7 +208,7 @@ def run_dlab_re(folder: Path, config: dict):
     """Run DLAB-Re on the types files in the folder as specified in the config.
 
     Args:
-        folder (Path): folder (Path): Folder containing the input data in types format
+        folder (Path): folder (Path): Folder containing the input data in gninatypes format
         config (dict): Parsed yaml config
 
     Raises:
@@ -322,8 +324,8 @@ def make_types_file(folder: Path):
     f_name = folder / "dlab_re_input.types"
 
     with open(f_name, "w") as outf:
-        for ab_f in folder.glob("*_ab.types"):
-            ag_f = Path(str(ab_f).replace("_ab.types", "_ag.types"))
+        for ab_f in folder.glob("*_ab.gninatypes"):
+            ag_f = Path(str(ab_f).replace("_ab.gninatypes", "_ag.gninatypes"))
             if ag_f.exists():
                 line = f"1 1.0 {ab_f} {ag_f} #\n"
                 outf.write(line)
@@ -378,13 +380,14 @@ def run(config: dict):
     Args:
         config (dict): Parsed config file.
     """
-    inputdir_path = Path(config["input_directory"]) / "types"
+    inputdir_path = Path(config["input_directory"]) / "gninatypes"
+    if not inputdir_path.exists():
+        raise ValueError("The input directory does not exist.")
 
     target_dirs = [i for i in inputdir_path.glob("*") if i.is_dir()]
 
     results = []
     for count, target_dir in enumerate(target_dirs):
-        print(count)
         sys.stdout.flush()
         results.append([target_dir.name, run_on_docking_folder(target_dir, config)])
 
