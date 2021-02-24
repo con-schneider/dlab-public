@@ -15,7 +15,7 @@ Code to run the antibody virtual screening pipeline described in the paper "DLAB
 5. Install [openbabel](https://github.com/openbabel/openbabel), including the python bindings.
 
 ## Test your install
-The folder tests/ contains scripts you can use to check if your folder structure and python environment are set up correctly. Run them with pytest:
+The folder tests/ contains scripts you can use to check if your folder structure is set up correctly. Run them with pytest:
 
 	pytest tests/
 
